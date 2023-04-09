@@ -1,8 +1,19 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import generics
+from .models import Note
 
-# Create your views here.
+from .serializers import NoteSerializers
+
+# class NoteDetailView(generics.GenericAPIView):
+#     queryset = Note.objects.all()
+#     serializer_class = NoteSerializers
+
+@api_view(['GET'])
 def getRoutes(request):
+    """
+    API TO GET ALL THE ROUTES
+    """
     routes = [
         {
             'endpoint':'/notes/',
@@ -29,4 +40,16 @@ def getRoutes(request):
             'description':'delete the note with the given id'
         }
     ]
-    return JsonResponse(routes, safe=False)
+    return Response(routes)
+
+@api_view(['GET'])
+def getNotes(request):
+    notes = Note.objects.all()
+    serializer = NoteSerializers(notes, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getnote(request, pk):
+    note = Note.objects.get(id=pk)
+    serializer = NoteSerializers(note)
+    return Response(serializer.data)
