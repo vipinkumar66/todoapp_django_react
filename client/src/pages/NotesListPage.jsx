@@ -9,7 +9,6 @@ const NotesListPage = () => {
         let response = await fetch('http://127.0.0.1:8000/home/notes/')
         let all_notes = await response.json()
         setNotes(all_notes)
-        console.log(notes)
       } catch(error){
         console.log(error)
       }
@@ -20,6 +19,15 @@ const NotesListPage = () => {
   return (
     <div>
       <h2>ALL NOTES</h2>
+      {notes.map((note) => {
+        return(
+          <div key={note.id}>
+            <h3>
+            {note.body}
+            </h3>
+          </div>
+        )
+      })}
     </div>
   )
 }
