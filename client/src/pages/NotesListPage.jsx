@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import NoteList from '../components/NoteList'
 
 const NotesListPage = () => {
 
@@ -18,13 +19,10 @@ const NotesListPage = () => {
 
   return (
     <div>
-      <h2>ALL NOTES</h2>
-      {notes.map((note) => {
+      {notes.map((note, index) => {
         return(
           <div key={note.id}>
-            <h3>
-            {note.body}
-            </h3>
+            <NoteList key={index} note={note}/>
           </div>
         )
       })}
