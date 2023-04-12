@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { ReactComponent as ArrowLeft } from '../assets/left-arrow.svg';
+
 
 const NotePage = () => {
     const {id} = useParams()
@@ -19,10 +21,11 @@ const NotePage = () => {
     },[])
 
   return (
-    <div>
-      <h2>{noteData? noteData.body : ""}</h2>
-      <p>{noteData ? noteData.created : ""}</p>
-      <p>{noteData ? noteData.updated: ""}</p>
+    <div className='note'>
+        <div className='note-header'>
+            <ArrowLeft/>
+        </div>
+      <textarea defaultValue={noteData?.body}></textarea>
     </div>
   )
 }

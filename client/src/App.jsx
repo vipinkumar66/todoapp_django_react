@@ -7,12 +7,14 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        <Header/>
-        <Routes>
-          <Route exact path='/' Component={NotesListPage}/>
-          <Route path='/note/:id' Component={NotePage}/>
-        </Routes>
+      <div className="container dark">
+        <div className='app'>
+          <Header/>
+          <Routes>
+            <Route exact path='/' Component={NotesListPage}/>
+            <Route path='/note/:id' Component={NotePage}/>
+          </Routes>
+        </div>
       </div>
     </Router>
   )
