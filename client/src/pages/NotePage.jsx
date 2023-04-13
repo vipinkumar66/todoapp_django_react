@@ -31,6 +31,16 @@ const NotePage = () => {
 
     }
 
+    const deleteNote = async () =>{
+      await fetch(`http://127.0.0.1:8000/home/delete/note/${id}`, {
+        method:'DELETE',
+        headers:{
+          'Content-type':'application/json'
+        }
+      })
+      navigate('/')
+    }
+
     const handleSubmit =() =>{
       sendDetail()
       navigate('/')
@@ -42,6 +52,7 @@ const NotePage = () => {
           <h3>
             <FaArrowLeft onClick={handleSubmit}/>
           </h3>
+          <button onClick={deleteNote}>Delete</button>
         </div>
       <textarea onChange={(e)=> {setNoteData({...noteData, "body": e.target.value})}} defaultValue={noteData?.body}></textarea>
     </div>

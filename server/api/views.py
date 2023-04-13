@@ -1,13 +1,10 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import generics
+from rest_framework import status
 from .models import Note
 
 from .serializers import NoteSerializers
 
-# class NoteDetailView(generics.GenericAPIView):
-#     queryset = Note.objects.all()
-#     serializer_class = NoteSerializers
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -44,7 +41,7 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getNotes(request):
-    notes = Note.objects.all()
+    notes = Note.objects.all().order_by('-updated')
     serializer = NoteSerializers(notes, many=True)
     return Response(serializer.data)
 
@@ -67,3 +64,18 @@ def updatenote(request, pk, format=None):
         serializer.save()
         return Response(serializer.data, status=200)
     return Response(serializer.errors, status=400)
+
+@api_view(['DELETE'])
+def deletenote(request, pk):
+    """
+    This function is going to get the note from the database and then it
+    will delete that if it exists else it will give the status that the note
+    does not exists"""
+    try:
+        note = Note.objects.get(id=pk)
+    except Note.DoesNotExist:
+        return Response(status.HTTP_404_NOT_FOUND)
+
+    else:
+        note.delete()
+        return Response(status.HTTP_204_NO_CONTENT)
