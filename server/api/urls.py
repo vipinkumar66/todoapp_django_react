@@ -6,7 +6,8 @@ urlpatterns = [
     path("notes/", views.getNotes, name="allnotes"),
     # path("genericnotes/", views.NoteDetailView.as_view(), name="allnotes"),
     path("notes/<int:pk>/", views.getnote, name="singlenote"),
+    path('create/note/', views.createnote, name='create_note'),
     path('update/note/<int:pk>/', views.updatenote, name="updatenote"),
-    path('delete/note/<int:pk>', views.deletenote, name='delete_note')
+    path('delete/note/<int:pk>/', views.deletenote, name='delete_note')
 
 ]

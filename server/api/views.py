@@ -51,6 +51,18 @@ def getnote(request, pk):
     serializer = NoteSerializers(note)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def createnote(request):
+    """
+    This will create new note
+    """
+    data = request.data
+    note = Note.objects.create(
+        body = data['body']
+    )
+    serializer = NoteSerializers(note, many=False)
+    return Response(serializer.data)
+
 @api_view(['PUT'])
 def updatenote(request, pk, format=None):
     """
