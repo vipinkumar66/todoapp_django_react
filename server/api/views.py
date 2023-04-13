@@ -53,3 +53,17 @@ def getnote(request, pk):
     note = Note.objects.get(id=pk)
     serializer = NoteSerializers(note)
     return Response(serializer.data)
+
+@api_view(['PUT'])
+def updatenote(request, pk, format=None):
+    """
+    This will get the data from the frontend and pass it to the serializer to check
+    its validity and then if proper save it otherwise return the error
+    """
+    data = request.data
+    note = Note.objects.get(id=pk)
+    serializer = NoteSerializers(instance=note, data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=200)
+    return Response(serializer.errors, status=400)
